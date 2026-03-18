@@ -90,7 +90,7 @@ stdenv.mkDerivation {
       name = "netsoft-com.netsoft.hubstaff";
       desktopName = "Hubstaff";
       exec = "HubstaffClient";
-      icon = "hubstaff";
+      icon = "hubstaff-color";
       comment = "Time tracking software";
       categories = [
         "Office"
@@ -119,6 +119,12 @@ stdenv.mkDerivation {
 
     # Why is this needed? SEGV otherwise.
     ln -s $opt/data/resources $opt/x86_64/resources
+
+    # Link icons to the standard directory
+    mkdir -p $out/share/icons
+    ln -s $opt/data/resources/hicolor $out/share/icons/hicolor
+    # Avoids colisions with default index.theme
+    rm -f $opt/data/resources/hicolor/index.theme
     runHook postInstall
   '';
 
